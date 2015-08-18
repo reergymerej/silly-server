@@ -7,9 +7,13 @@ import (
 	"time"
 )
 
-func server(responseWriter http.ResponseWriter, req *http.Request) {
+func timeHandler(responseWriter http.ResponseWriter, req *http.Request) {
 	timeString := time.Now().Format(time.Stamp)
 	io.WriteString(responseWriter, timeString+"\n")
+}
+
+func helloHandler(responseWriter http.ResponseWriter, req *http.Request) {
+	io.WriteString(responseWriter, "Hello.\n")
 }
 
 func main() {
@@ -17,7 +21,10 @@ func main() {
 
 	log.Print("listening at http://localhost" + PORT)
 
-	http.HandleFunc("/time", server)
+
+	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/hello", helloHandler)
+
 	err := http.ListenAndServe(PORT, nil)
 
 	if err != nil {
