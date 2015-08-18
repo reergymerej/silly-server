@@ -7,20 +7,24 @@ import (
 	"time"
 )
 
+func prefixOutput(output string, req *http.Request) string {
+	url := string(req.URL.Path)
+	return url + "\n" + output
+}
+
 func timeHandler(responseWriter http.ResponseWriter, req *http.Request) {
 	timeString := time.Now().Format(time.Stamp)
-	io.WriteString(responseWriter, timeString+"\n")
+	io.WriteString(responseWriter, prefixOutput(timeString+"\n", req))
 }
 
 func helloHandler(responseWriter http.ResponseWriter, req *http.Request) {
-	io.WriteString(responseWriter, "Hello.\n")
+	io.WriteString(responseWriter, prefixOutput("Hello.\n", req))
 }
 
 func main() {
 	const PORT = ":8080"
 
 	log.Print("listening at http://localhost" + PORT)
-
 
 	http.HandleFunc("/time", timeHandler)
 	http.HandleFunc("/hello", helloHandler)
