@@ -1,9 +1,7 @@
-Runs a server that gives the current time.
-
 ## Usage
 
 ```sh
-go time-server
+go silly-server
 ```
 
 View the time at http://localhost:8080/time
